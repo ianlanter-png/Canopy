@@ -34,15 +34,16 @@ export default function Home() {
     if (!form.caption && !form.species) return alert('Add a caption or species!')
     setUploading(true)
 
-    const ext = file.name.split('.').pop()
+    const ext = file.name.split('.').pop().toLowerCase()
     const path = `${Date.now()}.${ext}`
+
 
     const { error: uploadError } = await supabase.storage
       .from('tree-photos')
-      .upload(path, file)
+      .upload(path, file, { upsert: true })
 
     if (uploadError) {
-      alert('Upload failed: ' + uploadError.message)
+      alert('Upload failed: ' + JSON.stringify(uploadError))
       setUploading(false)
       return
     }
