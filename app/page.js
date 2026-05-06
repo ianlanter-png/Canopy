@@ -37,7 +37,10 @@ export default function Home() {
     try {
       const ext = file.name.split('.').pop().toLowerCase()
       const fileName = `${Date.now()}.${ext}`
-
+      console.log('Bucket: tree-photos')
+      console.log('File name:', fileName)
+      console.log('File type:', file.type)
+      console.log('File size:', file.size)
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('tree-photos')
         .upload(fileName, file, {
